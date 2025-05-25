@@ -41,11 +41,11 @@ const RacesList: React.FC = () => {
 
   return (
     <div className="mt-6">
-      <h2 className="text-xl font-bold mb-4">
+      <h2 className="text-xl font-bold mb-4 text-white">
         Races for {selectedSeason} Season
       </h2>
       {races.length === 0 ? (
-        <p>Loading races...</p>
+        <p className="text-white">Loading races...</p>
       ) : (
         <ul className="space-y-2">
           {races.map((race) => (
