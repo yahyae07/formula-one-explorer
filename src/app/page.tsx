@@ -1,16 +1,21 @@
+import HeaderBar from "@/components/HeaderBar";
 import RacesList from "@/components/RacesList";
 import SeasonsList from "@/components/SeasonsList";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gray-400">
-      <h1 className="text-2xl font-bold">
-        Explore the seasons, drivers, and teams of Formula One.
-      </h1>
-      <div className="w-full max-w-6xl">
-        <SeasonsList />
-        <RacesList />
+    <div className="bg-[#1E2028]">
+      <HeaderBar />
+
+      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+        <h1 className="text-2xl font-bold text-white">
+          Explore the seasons, drivers, and teams of Formula One.
+        </h1>
+        <div className="w-full max-w-6xl">
+          <SeasonsList />
+          <RacesList />
+        </div>
       </div>
     </div>
   );
