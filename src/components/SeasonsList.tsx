@@ -41,7 +41,11 @@ const SeasonsList: React.FC = () => {
                   handleSeasonClick(season.season);
                   console.log(`Selected season: ${season.season}`);
                 }}
-                className="text-blue-500 hover:underline"
+                className={`w-full h-12 flex items-center justify-center text-center ${
+                  selectedSeason === season.season
+                    ? "bg-blue-500 text-white"
+                    : "text-blue-500 bg-gray-50 hover:bg-gray-100"
+                } rounded-md border transition-colors`}
               >
                 {season.season}
               </button>
