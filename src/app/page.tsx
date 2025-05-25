@@ -1,3 +1,4 @@
+import RacesList from "@/components/RacesList";
 import SeasonsList from "@/components/SeasonsList";
 import Image from "next/image";
 
@@ -7,8 +8,10 @@ export default function Home() {
       <h1 className="text-2xl font-bold">
         Explore the seasons, drivers, and teams of Formula One.
       </h1>
-      {/* <h1>Explore the seasons, drivers, and teams of Formula One.</h1> */}
-      <SeasonsList />
+      <div className="w-full max-w-6xl">
+        <SeasonsList />
+        <RacesList />
+      </div>
     </div>
   );
 }
