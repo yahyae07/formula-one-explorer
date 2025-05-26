@@ -4,11 +4,15 @@ import useSeasonsStore from "@/store/useSeasonsStore";
 import useRacesStore from "@/store/useRacesStore";
 import React, { useEffect, useState } from "react";
 
-const SeasonsCard: React.FC = () => {
+const SeasonsList: React.FC = () => {
   const { seasons, setSeasons } = useSeasonsStore();
   const { selectSeason, selectedSeason } = useRacesStore();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const totalPages = Math.ceil(seasons.length / itemsPerPage);
+  const pageStart = (currentPage - 1) * itemsPerPage;
+  const pageEnd = pageStart + itemsPerPage;
+  const currentPageItems = seasons.slice(pageStart, pageEnd);
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -27,16 +31,11 @@ const SeasonsCard: React.FC = () => {
       }
     };
     fetchSeasons();
-  }, [setSeasons]);
+  }, []);
 
   const handleSeasonClick = (season: string) => {
     selectSeason(season);
   };
-
-  const totalPages = Math.ceil(seasons.length / itemsPerPage);
-  const pageStart = (currentPage - 1) * itemsPerPage;
-  const pageEnd = pageStart + itemsPerPage;
-  const currentPageItems = seasons.slice(pageStart, pageEnd);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () =>
@@ -49,9 +48,7 @@ const SeasonsCard: React.FC = () => {
         F1 Seasons
       </h1>
       {seasons.length === 0 ? (
-        <p className="text-[var(--f1-red)] text-xl font-bold">
-          Loading seasons...
-        </p>
+        <p className="text-white text-xl font-bold">Loading seasons...</p>
       ) : (
         <>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mb-4">
@@ -75,7 +72,16 @@ const SeasonsCard: React.FC = () => {
                   <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)]">
                     <div className="w-full h-24 flex flex-col items-center justify-center text-center">
                       <span className="text-lg font-bold">{season.season}</span>
-                      <span className="text-xs mt-1">Formula 1</span>
+                      {season.url && (
+                        <a
+                          href={season.url}
+                          target="_blank"
+                          className="text-[var(--f1-lilac)] text-xs mt-2 hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          View details
+                        </a>
+                      )}
                     </div>
                   </div>
                   <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2"></div>
@@ -127,4 +133,4 @@ const SeasonsCard: React.FC = () => {
   );
 };
 
-export default SeasonsCard;
+export default SeasonsList;

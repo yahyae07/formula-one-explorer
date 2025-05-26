@@ -2,9 +2,11 @@ import React from "react";
 
 const HeaderBar = () => {
   return (
-    <div className="fixed flex h-16 w-full flex-row items-center justify-between bg-bc shadow-lg px-5">
+    <div className="relative flex h-16 w-full flex-row items-center justify-between bg-[var(--f1-grey)] shadow-lg px-5">
       <div className="flex flex-row items-center gap-2">
-        <h1 className="text-white  text-4xl font-bold">Formula One</h1>
+        <h1 className="text-[var(--f1-white)] text-4xl font-bold">
+          Formula One
+        </h1>
         <h1 className="text-[var(--f1-red)] text-4xl font-bold ">Explorer</h1>
       </div>
       <div className="flex flex-row justify-center gap-2">
