@@ -2,6 +2,7 @@ import {create} from 'zustand';
 
 interface Season {
     season: string;
+    url: string;
 }
 
 interface SeasonsStore {

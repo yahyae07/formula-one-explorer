@@ -4,7 +4,7 @@ import useSeasonsStore from "@/store/useSeasonsStore";
 import useRacesStore from "@/store/useRacesStore";
 import React, { useEffect, useState } from "react";
 
-const SeasonsList: React.FC = () => {
+const SeasonsCard: React.FC = () => {
   const { seasons, setSeasons } = useSeasonsStore();
   const { selectSeason, selectedSeason } = useRacesStore();
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,41 +50,25 @@ const SeasonsList: React.FC = () => {
         <p className="text-white text-xl font-bold">Loading seasons...</p>
       ) : (
         <>
-          <ul className="space-y-2 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mb-4">
             {currentPageItems.map((season) => (
-              <li
-                key={season.season}
-                onClick={() => handleSeasonClick(season.season)}
-                className={`p-3 rounded-md border cursor-pointer transition-colors ${
-                  selectedSeason === season.season
-                    ? "bg-gray-800 text-white border-violet-500"
-                    : "bg-[#3d3c3d] text-white hover:bg-gray-800"
-                }`}
-              >
-                <div className="flex justify-between items-center">
-                  <div className="font-medium text-lg">
-                    {season.season} F1 Season
-                  </div>
-                </div>
-                <div className="text-sm text-gray-600 mt-1">
-                  {season.url ? (
-                    <a
-                      href={season.url}
-                      target="_blank"
-                      className="text-blue-600 hover:underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      View season details
-                    </a>
-                  ) : (
-                    <span className="text-gray-400">
-                      Error loading the season details
-                    </span>
-                  )}
-                </div>
-              </li>
+              <div key={season.season}>
+                <button
+                  onClick={() => {
+                    handleSeasonClick(season.season);
+                  }}
+                  className={`w-full h-24 flex flex-col items-center justify-center text-center ${
+                    selectedSeason === season.season
+                      ? "bg-gray-800"
+                      : "bg-[#3d3c3d]  hover:bg-gray-700"
+                  } border transition-colors rounded-xl shadow-md text-white cursor-pointer`}
+                >
+                  <span className="text-lg font-bold">{season.season}</span>
+                  <span className="text-xs mt-1">Formula 1</span>
+                </button>
+              </div>
             ))}
-          </ul>
+          </div>
 
           <div className="flex items-center justify-center space-x-1 my-4">
             <button
@@ -129,4 +113,4 @@ const SeasonsList: React.FC = () => {
   );
 };
 
-export default SeasonsList;
+export default SeasonsCard;
