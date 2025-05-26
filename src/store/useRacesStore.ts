@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface Race {
+export interface Race {
     season: string;
     round: string;
     raceName: string;

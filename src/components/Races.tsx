@@ -1,45 +1,53 @@
 "use client";
 
-import useSeasonsStore from "@/store/useSeasonsStore";
+import React, { useEffect, useState } from "react";
 import useRacesStore from "@/store/useRacesStore";
 import useViewStore from "@/store/useViewStore";
-import React, { useEffect, useState } from "react";
-import SeasonCard from "./SeasonCard";
-import SeasonList from "./SeasonList";
+import RaceCard from "./RaceCard";
+import RaceList from "./RaceList";
 
-const Seasons: React.FC = () => {
-  const { seasons, setSeasons } = useSeasonsStore();
-  const { selectSeason, selectedSeason } = useRacesStore();
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+const Races: React.FC = () => {
+  const { races, setRaces, selectedSeason } = useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(seasons.length / itemsPerPage);
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(races.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
   const pageEnd = pageStart + itemsPerPage;
-  const currentPageItems = seasons.slice(pageStart, pageEnd);
+  const currentPageItems = races.slice(pageStart, pageEnd);
+
+  const circuitImages: Record<string, string> = {
+    silverstone: "silverstone.png",
+  };
 
   useEffect(() => {
-    const fetchSeasons = async () => {
-      try {
-        console.log("Fetching seasons data...");
-        const response = await fetch("https://ergast.com/api/f1/seasons.json");
-        const data = await response.json();
-        console.log("Fetched seasons:", data.MRData.SeasonTable.Seasons);
-        const sortedSeasons = [...data.MRData.SeasonTable.Seasons].sort(
-          (a, b) => parseInt(b.season) - parseInt(a.season)
-        );
+    const fetchRaces = async () => {
+      if (!selectedSeason) return;
 
-        setSeasons(sortedSeasons);
+      try {
+        console.log(`Fetching races for season: ${selectedSeason}`);
+        const response = await fetch(
+          `https://ergast.com/api/f1/${selectedSeason}/races.json`
+        );
+        const data = await response.json();
+        console.log("Fetched races:", data.MRData.RaceTable.Races);
+        setRaces(data.MRData.RaceTable.Races);
+        setCurrentPage(1);
       } catch (error) {
-        console.error("Error fetching seasons:", error);
+        console.error("Error fetching races:", error);
       }
     };
-    fetchSeasons();
-  }, []);
-
-  const handleSeasonClick = (season: string) => {
-    selectSeason(season);
-  };
+    fetchRaces();
+  }, [selectedSeason]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () =>
@@ -48,36 +56,40 @@ const Seasons: React.FC = () => {
 
   const showAsCards = showCardView && !showListView;
 
-  return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
-        F1 Seasons
-      </h1>
+  if (!selectedSeason) {
+    return (
+      <div className="font-bold text-xl text-[var(--f1-red)] mt-6">
+        Please select a season to view races
+      </div>
+    );
+  }
 
-      {seasons.length === 0 ? (
-        <p className="text-white text-xl font-bold">Loading seasons...</p>
+  return (
+    <div className="mt-6">
+      <h2 className="text-xl font-bold mb-4 text-[var(--f1-red)]">
+        Races for {selectedSeason} Season
+      </h2>
+      {races.length === 0 ? (
+        <p className="text-white">Loading races...</p>
       ) : (
         <>
           {showAsCards ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 mb-4">
-              {currentPageItems.map((season) => (
-                <div key={season.season}>
-                  <SeasonCard
-                    season={season}
-                    isSelected={selectedSeason === season.season}
-                    onSelect={handleSeasonClick}
-                  />
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+              {currentPageItems.map((race) => (
+                <RaceCard
+                  key={race.round}
+                  race={race}
+                  circuitImages={circuitImages}
+                />
               ))}
             </div>
           ) : (
-            <ul className="space-y-3 mb-4">
-              {currentPageItems.map((season) => (
-                <SeasonList
-                  key={season.season}
-                  season={season}
-                  isSelected={selectedSeason === season.season}
-                  onSelect={handleSeasonClick}
+            <ul>
+              {currentPageItems.map((race) => (
+                <RaceList
+                  key={race.round}
+                  race={race}
+                  circuitImages={circuitImages}
                 />
               ))}
             </ul>
@@ -101,7 +113,7 @@ const Seasons: React.FC = () => {
                     onClick={() => paginate(pageNum)}
                     className={`w-8 h-8 flex items-center justify-center rounded-md cursor-pointer ${
                       currentPage === pageNum
-                        ? "bg-[var(--f1-lilac)] text-white"
+                        ? "bg-[var(--f1-red)] text-white"
                         : "bg-[var(--f1-black)] text-white hover:bg-gray-700"
                     }`}
                   >
@@ -125,4 +137,4 @@ const Seasons: React.FC = () => {
   );
 };
 
-export default Seasons;
+export default Races;

@@ -15,7 +15,7 @@ const SeasonList: React.FC<SeasonListProps> = ({
   return (
     <li
       onClick={() => onSelect(season.season)}
-      className={`relative p-4 rounded-xl drop-shadow-lg cursor-pointer transition-all duration-200 overflow-hidden 
+      className={`relative p-4 rounded-xl drop-shadow-lg cursor-pointer overflow-hidden 
         ${isSelected ? "ring-4 ring-[var(--f1-lilac)]" : "hover:bg-gray-700"}
       `}
       role="button"
@@ -28,7 +28,7 @@ const SeasonList: React.FC<SeasonListProps> = ({
     >
       <div className="absolute inset-0 bg-[var(--f1-black)] opacity-90 -z-10"></div>
 
-      <div className="flex justify-between items-center relative z-10">
+      <div className="flex justify-between items-center relative">
         <div className="flex flex-col">
           <span className="text-lg font-bold text-white">
             {season.season} F1 Season
@@ -47,8 +47,6 @@ const SeasonList: React.FC<SeasonListProps> = ({
           )}
         </div>
       </div>
-
-      <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 opacity-5"></div>
     </li>
   );
 };
