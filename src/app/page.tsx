@@ -1,6 +1,6 @@
 import HeaderBar from "@/components/HeaderBar";
 import RacesList from "@/components/RacesList";
-import ViewSelector from "@/components/ViewSelector";
+import Seasons from "@/components/Seasons";
 
 export default function Home() {
   return (
@@ -12,7 +12,7 @@ export default function Home() {
           Explore the seasons, drivers, and teams of Formula One.
         </h1>
         <div className="w-full max-w-6xl">
-          <ViewSelector />
+          <Seasons />
           <RacesList />
         </div>
       </div>
