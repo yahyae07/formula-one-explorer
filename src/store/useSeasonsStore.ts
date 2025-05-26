@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 
-interface Season {
+export interface Season {
     season: string;
     url: string;
 }
