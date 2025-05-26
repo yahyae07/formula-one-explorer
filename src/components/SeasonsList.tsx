@@ -9,6 +9,10 @@ const SeasonsList: React.FC = () => {
   const { selectSeason, selectedSeason } = useRacesStore();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const totalPages = Math.ceil(seasons.length / itemsPerPage);
+  const pageStart = (currentPage - 1) * itemsPerPage;
+  const pageEnd = pageStart + itemsPerPage;
+  const currentPageItems = seasons.slice(pageStart, pageEnd);
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -33,11 +37,6 @@ const SeasonsList: React.FC = () => {
     selectSeason(season);
   };
 
-  const totalPages = Math.ceil(seasons.length / itemsPerPage);
-  const pageStart = (currentPage - 1) * itemsPerPage;
-  const pageEnd = pageStart + itemsPerPage;
-  const currentPageItems = seasons.slice(pageStart, pageEnd);
-
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
@@ -45,43 +44,56 @@ const SeasonsList: React.FC = () => {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4 text-white">F1 Seasons</h1>
+      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
+        F1 Seasons
+      </h1>
       {seasons.length === 0 ? (
         <p className="text-white text-xl font-bold">Loading seasons...</p>
       ) : (
         <>
-          <ul className="space-y-2 mb-4">
+          <ul className="space-y-3 mb-4">
             {currentPageItems.map((season) => (
               <li
                 key={season.season}
                 onClick={() => handleSeasonClick(season.season)}
-                className={`p-3 rounded-md border cursor-pointer transition-colors ${
-                  selectedSeason === season.season
-                    ? "bg-gray-800 text-white border-violet-500"
-                    : "bg-[#3d3c3d] text-white hover:bg-gray-800"
-                }`}
+                className={`relative p-4 rounded-xl drop-shadow-lg cursor-pointer transition-all duration-200 overflow-hidden 
+                  ${
+                    selectedSeason === season.season
+                      ? "ring-4 ring-[var(--f1-lilac)]"
+                      : "hover:bg-gray-700"
+                  }
+                `}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSeasonClick(season.season);
+                  }
+                }}
               >
-                <div className="flex justify-between items-center">
-                  <div className="font-medium text-lg">
-                    {season.season} F1 Season
+                <div className="absolute inset-0 bg-[var(--f1-black)] opacity-90 -z-10"></div>
+
+                <div className="flex justify-between items-center relative z-10">
+                  <div className="flex flex-col">
+                    <span className="text-lg font-bold text-white">
+                      {season.season} F1 Season
+                    </span>
+                  </div>
+                  <div>
+                    {season.url && (
+                      <a
+                        href={season.url}
+                        target="_blank"
+                        className="text-[var(--f1-lilac)] text-sm hover:underline"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        View details
+                      </a>
+                    )}
                   </div>
                 </div>
-                <div className="text-sm text-gray-600 mt-1">
-                  {season.url ? (
-                    <a
-                      href={season.url}
-                      target="_blank"
-                      className="text-blue-600 hover:underline"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      View season details
-                    </a>
-                  ) : (
-                    <span className="text-gray-400">
-                      Error loading the season details
-                    </span>
-                  )}
-                </div>
+
+                <div className="absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 opacity-5"></div>
               </li>
             ))}
           </ul>
@@ -90,7 +102,7 @@ const SeasonsList: React.FC = () => {
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className="px-3 py-1 bg-gray-700 text-white rounded-md disabled:opacity-50 hover:bg-gray-600 cursor-pointer disabled:cursor-not-allowed"
+              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
             >
               Previous
             </button>
@@ -105,8 +117,8 @@ const SeasonsList: React.FC = () => {
                     onClick={() => paginate(pageNum)}
                     className={`w-8 h-8 flex items-center justify-center rounded-md cursor-pointer ${
                       currentPage === pageNum
-                        ? "bg-violet-500 text-white"
-                        : "bg-gray-600 text-white hover:bg-gray-500"
+                        ? "bg-[var(--f1-lilac)] text-white"
+                        : "bg-[var(--f1-black)] text-white hover:bg-gray-700"
                     }`}
                   >
                     {pageNum}
@@ -118,7 +130,7 @@ const SeasonsList: React.FC = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-gray-700 text-white rounded-md disabled:opacity-50 hover:bg-gray-600 cursor-pointer disabled:cursor-not-allowed"
+              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
             >
               Next
             </button>
