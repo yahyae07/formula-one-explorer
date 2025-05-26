@@ -65,17 +65,20 @@ const RacesList: React.FC = () => {
         <p className="text-white">Loading races...</p>
       ) : (
         <>
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             {currentPageItems.map((race) => (
-              <li key={race.round} className="p-3 bg-gray-50 rounded-md border">
+              <li
+                key={race.round}
+                className="p-3 bg-[#3d3c3d] rounded-md text-white border-b-2 border-gray-400"
+              >
                 <div className="font-medium">{race.raceName}</div>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-gray-400">
                   {race.Circuit.circuitName} - {formatDate(race.date)}
                 </div>
               </li>
             ))}
           </ul>
-          {totalPages > 1 && (
+          {
             <div className="flex items-center justify-center space-x-1 my-4">
               <button
                 onClick={prevPage}
@@ -113,7 +116,7 @@ const RacesList: React.FC = () => {
                 Next
               </button>
             </div>
-          )}
+          }
         </>
       )}
     </div>
