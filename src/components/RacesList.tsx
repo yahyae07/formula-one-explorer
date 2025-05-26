@@ -36,7 +36,7 @@ const RacesList: React.FC = () => {
       }
     };
     fetchRaces();
-  }, [selectedSeason, setRaces]);
+  }, [selectedSeason]);
 
   const totalPages = Math.ceil(races.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
