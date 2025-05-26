@@ -14,7 +14,7 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
 }) => {
   return (
     <div
-      className={`relative drop-shadow-xl w-48 h-64 overflow-hidden rounded-xl hover:bg-gray-700 hover:cursor-pointer transition-colors ${
+      className={`relative drop-shadow-xl w-48 h-64 overflow-hidden rounded-xl hover:bg-gray-700 hover:cursor-pointer ${
         isSelected ? "ring-4 ring-[var(--f1-lilac)]" : ""
       }`}
       onClick={() => onSelect(season.season)}
