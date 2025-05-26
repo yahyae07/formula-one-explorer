@@ -31,7 +31,7 @@ const SeasonsList: React.FC = () => {
       }
     };
     fetchSeasons();
-  }, [setSeasons]);
+  }, []);
 
   const handleSeasonClick = (season: string) => {
     selectSeason(season);

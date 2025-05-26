@@ -4,7 +4,7 @@ import useSeasonsStore from "@/store/useSeasonsStore";
 import useRacesStore from "@/store/useRacesStore";
 import React, { useEffect, useState } from "react";
 
-const SeasonsList: React.FC = () => {
+const SeasonsCard: React.FC = () => {
   const { seasons, setSeasons } = useSeasonsStore();
   const { selectSeason, selectedSeason } = useRacesStore();
   const [currentPage, setCurrentPage] = useState(1);
@@ -133,4 +133,4 @@ const SeasonsList: React.FC = () => {
   );
 };
 
-export default SeasonsList;
+export default SeasonsCard;
