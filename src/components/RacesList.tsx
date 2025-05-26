@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useSeasonsStore from "@/store/useSeasonsStore";
 import useRacesStore from "@/store/useRacesStore";
 
 const RacesList: React.FC = () => {
   const { races, setRaces, selectedSeason } = useRacesStore();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -28,6 +30,7 @@ const RacesList: React.FC = () => {
         const data = await response.json();
         console.log("Fetched races:", data.MRData.RaceTable.Races);
         setRaces(data.MRData.RaceTable.Races);
+        setCurrentPage(1);
       } catch (error) {
         console.error("Error fetching races:", error);
       }
@@ -35,8 +38,22 @@ const RacesList: React.FC = () => {
     fetchRaces();
   }, [selectedSeason, setRaces]);
 
+  const totalPages = Math.ceil(races.length / itemsPerPage);
+  const pageStart = (currentPage - 1) * itemsPerPage;
+  const pageEnd = pageStart + itemsPerPage;
+  const currentPageItems = races.slice(pageStart, pageEnd);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const nextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+
   if (!selectedSeason) {
-    return <div>Please select a season to view races</div>;
+    return (
+      <div className="text-white font-bold text-xl">
+        Please select a season to view races
+      </div>
+    );
   }
 
   return (
@@ -47,16 +64,57 @@ const RacesList: React.FC = () => {
       {races.length === 0 ? (
         <p className="text-white">Loading races...</p>
       ) : (
-        <ul className="space-y-2">
-          {races.map((race) => (
-            <li key={race.round} className="p-3 bg-gray-50 rounded-md border">
-              <div className="font-medium">{race.raceName}</div>
-              <div className="text-sm text-gray-600">
-                {race.Circuit.circuitName} - {formatDate(race.date)}
+        <>
+          <ul className="space-y-2">
+            {currentPageItems.map((race) => (
+              <li key={race.round} className="p-3 bg-gray-50 rounded-md border">
+                <div className="font-medium">{race.raceName}</div>
+                <div className="text-sm text-gray-600">
+                  {race.Circuit.circuitName} - {formatDate(race.date)}
+                </div>
+              </li>
+            ))}
+          </ul>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center space-x-1 my-4">
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className="px-3 py-1 bg-gray-700 text-white rounded-md disabled:opacity-50 hover:bg-gray-600 cursor-pointer disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+
+              <div className="flex space-x-1">
+                {Array.from({ length: totalPages }, (_, i) => {
+                  const pageNum = i + 1;
+
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => paginate(pageNum)}
+                      className={`w-8 h-8 flex items-center justify-center rounded-md cursor-pointer ${
+                        currentPage === pageNum
+                          ? "bg-violet-500 text-white"
+                          : "bg-gray-600 text-white hover:bg-gray-500"
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
               </div>
-            </li>
-          ))}
-        </ul>
+
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 bg-gray-700 text-white rounded-md disabled:opacity-50 hover:bg-gray-600 cursor-pointer disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
