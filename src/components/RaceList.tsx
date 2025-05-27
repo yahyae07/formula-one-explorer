@@ -29,14 +29,7 @@ const RaceList: React.FC<RaceListProps> = ({
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-2">
           <h3 className="text-lg font-bold">{race.raceName}</h3>
-          {isPinned ? (
-            <PinIcon className="mt-2 cursor-pointer" onClick={handlePinClick} />
-          ) : (
-            <UnpinIcon
-              className="mt-2 cursor-pointer"
-              onClick={handlePinClick}
-            />
-          )}
+
           <div className="text-sm text-gray-300 mb-2">
             {race.Circuit.circuitName} - {formatDate(race.date)}
           </div>
@@ -44,8 +37,21 @@ const RaceList: React.FC<RaceListProps> = ({
             Round {race.round}
           </div>
 
-          <div className="mt-8 text-xs bg-[var(--f1-red)] inline-block px-3 py-2 rounded-md hover:cursor-pointer">
-            View participants
+          <div className="mt-8 flex flex-row items-center gap-3">
+            <div className="text-xs bg-[var(--f1-red)] inline-block px-3 py-2 rounded-md hover:cursor-pointer">
+              View participants
+            </div>
+            {isPinned ? (
+              <PinIcon
+                className="cursor-pointer text-[var(--f1-white)]"
+                onClick={handlePinClick}
+              />
+            ) : (
+              <UnpinIcon
+                className="cursor-pointer text-[var(--f1-white)]"
+                onClick={handlePinClick}
+              />
+            )}
           </div>
         </div>
 
