@@ -1,13 +1,29 @@
 import { Race } from "@/store/useRacesStore";
 import React from "react";
 import { formatDate } from "./Races";
+import { MdOutlinePushPin, MdPushPin } from "react-icons/md";
 
 interface RaceListProps {
   race: Race;
   circuitImages: Record<string, string>;
+  isPinned: boolean;
+  onPinToggle: () => void;
+  PinIcon: typeof MdPushPin;
+  UnpinIcon: typeof MdOutlinePushPin;
 }
 
-const RaceList: React.FC<RaceListProps> = ({ race, circuitImages }) => {
+const RaceList: React.FC<RaceListProps> = ({
+  race,
+  circuitImages,
+  isPinned,
+  onPinToggle,
+  PinIcon,
+  UnpinIcon,
+}) => {
+  const handlePinClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onPinToggle();
+  };
   return (
     <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4">
       <div className="flex flex-col md:flex-row gap-4">

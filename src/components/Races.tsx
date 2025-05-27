@@ -5,6 +5,7 @@ import useRacesStore from "@/store/useRacesStore";
 import useViewStore from "@/store/useViewStore";
 import RaceCard from "./RaceCard";
 import RaceList from "./RaceList";
+import { MdPushPin, MdOutlinePushPin } from "react-icons/md";
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -19,6 +20,7 @@ const Races: React.FC = () => {
   const { races, setRaces, selectedSeason } = useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
+  const [pinnedRaces, setPinnedRaces] = useState<string[]>([]);
   const itemsPerPage = 4;
   const totalPages = Math.ceil(races.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
@@ -27,6 +29,14 @@ const Races: React.FC = () => {
 
   const circuitImages: Record<string, string> = {
     silverstone: "silverstone.png",
+  };
+
+  const togglePinned = (raceId: string) => {
+    const newPinnedRaces = pinnedRaces.includes(raceId)
+      ? pinnedRaces.filter((id) => id !== raceId)
+      : [...pinnedRaces, raceId];
+
+    setPinnedRaces(newPinnedRaces);
   };
 
   useEffect(() => {
@@ -80,6 +90,14 @@ const Races: React.FC = () => {
                   key={race.round}
                   race={race}
                   circuitImages={circuitImages}
+                  isPinned={pinnedRaces.includes(
+                    `${race.season}-${race.round}`
+                  )}
+                  onPinToggle={() =>
+                    togglePinned(`${race.season}-${race.round}`)
+                  }
+                  PinIcon={MdPushPin}
+                  UnpinIcon={MdOutlinePushPin}
                 />
               ))}
             </div>
@@ -90,6 +108,14 @@ const Races: React.FC = () => {
                   key={race.round}
                   race={race}
                   circuitImages={circuitImages}
+                  isPinned={pinnedRaces.includes(
+                    `${race.season}-${race.round}`
+                  )}
+                  onPinToggle={() =>
+                    togglePinned(`${race.season}-${race.round}`)
+                  }
+                  PinIcon={MdPushPin}
+                  UnpinIcon={MdOutlinePushPin}
                 />
               ))}
             </ul>
