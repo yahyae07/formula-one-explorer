@@ -5,6 +5,7 @@ import useRacesStore from "@/store/useRacesStore";
 import useViewStore from "@/store/useViewStore";
 import RaceCard from "./RaceCard";
 import RaceList from "./RaceList";
+import { MdPushPin, MdOutlinePushPin } from "react-icons/md";
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -16,14 +17,24 @@ export const formatDate = (dateString: string) => {
 };
 
 const Races: React.FC = () => {
-  const { races, setRaces, selectedSeason } = useRacesStore();
+  const { races, setRaces, selectedSeason, pinnedRaces, togglePin, isPinned } =
+    useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(races.length / itemsPerPage);
+
+  const sortedRaces = [...races].sort((a, b) => {
+    const aIsPinned = isPinned(`${a.season}-${a.round}`);
+    const bIsPinned = isPinned(`${b.season}-${b.round}`);
+    if (aIsPinned && !bIsPinned) return -1;
+    if (!aIsPinned && bIsPinned) return 1;
+    return 0;
+  });
+
+  const totalPages = Math.ceil(sortedRaces.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
   const pageEnd = pageStart + itemsPerPage;
-  const currentPageItems = races.slice(pageStart, pageEnd);
+  const currentPageItems = sortedRaces.slice(pageStart, pageEnd);
 
   const circuitImages: Record<string, string> = {
     silverstone: "silverstone.png",
@@ -80,6 +91,12 @@ const Races: React.FC = () => {
                   key={race.round}
                   race={race}
                   circuitImages={circuitImages}
+                  isPinned={pinnedRaces.includes(
+                    `${race.season}-${race.round}`
+                  )}
+                  onPinToggle={() => togglePin(`${race.season}-${race.round}`)}
+                  PinIcon={MdPushPin}
+                  UnpinIcon={MdOutlinePushPin}
                 />
               ))}
             </div>
@@ -90,6 +107,12 @@ const Races: React.FC = () => {
                   key={race.round}
                   race={race}
                   circuitImages={circuitImages}
+                  isPinned={pinnedRaces.includes(
+                    `${race.season}-${race.round}`
+                  )}
+                  onPinToggle={() => togglePin(`${race.season}-${race.round}`)}
+                  PinIcon={MdPushPin}
+                  UnpinIcon={MdOutlinePushPin}
                 />
               ))}
             </ul>
