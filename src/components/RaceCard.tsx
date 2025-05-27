@@ -1,4 +1,4 @@
-import { Race } from "@/store/useRacesStore";
+import useRacesStore, { Race } from "@/store/useRacesStore";
 import React from "react";
 import { formatDate } from "./Races";
 import { MdOutlinePushPin, MdPushPin } from "react-icons/md";
@@ -20,6 +20,11 @@ const RaceCard: React.FC<RaceCardProps> = ({
   PinIcon,
   UnpinIcon,
 }) => {
+  const { selectRound, openModal } = useRacesStore();
+  const handleViewParticipants = () => {
+    selectRound(race.round);
+    openModal();
+  };
   const handlePinClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onPinToggle();
@@ -64,7 +69,10 @@ const RaceCard: React.FC<RaceCardProps> = ({
         </div>
 
         <div className="flex justify-end">
-          <div className="text-xs bg-[var(--f1-red)] px-3 py-2 rounded-md hover:cursor-pointer">
+          <div
+            className="text-xs bg-[var(--f1-red)] px-3 py-2 rounded-md hover:cursor-pointer"
+            onClick={handleViewParticipants}
+          >
             View participants
           </div>
         </div>
