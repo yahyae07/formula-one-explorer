@@ -24,7 +24,6 @@ const RaceCard: React.FC<RaceCardProps> = ({
     e.stopPropagation();
     onPinToggle();
   };
-
   return (
     <div className="relative drop-shadow-xl w-full h-64 overflow-hidden rounded-xl">
       <div className="absolute flex flex-col justify-between text-white opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)] p-4">

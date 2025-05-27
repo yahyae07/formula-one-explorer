@@ -27,11 +27,18 @@ const RaceList: React.FC<RaceListProps> = ({
   return (
     <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4">
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1">
+        <div className="flex-2">
           <h3 className="text-lg font-bold">{race.raceName}</h3>
+          {isPinned ? (
+            <PinIcon className="mt-2 cursor-pointer" onClick={handlePinClick} />
+          ) : (
+            <UnpinIcon
+              className="mt-2 cursor-pointer"
+              onClick={handlePinClick}
+            />
+          )}
           <div className="text-sm text-gray-300 mb-2">
-            {race.Circuit.circuitName} <br />
-            {formatDate(race.date)}
+            {race.Circuit.circuitName} - {formatDate(race.date)}
           </div>
           <div className="text-xs text-[var(--f1-lilac)]">
             Round {race.round}

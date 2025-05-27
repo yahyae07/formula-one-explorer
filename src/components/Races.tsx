@@ -17,26 +17,27 @@ export const formatDate = (dateString: string) => {
 };
 
 const Races: React.FC = () => {
-  const { races, setRaces, selectedSeason } = useRacesStore();
+  const { races, setRaces, selectedSeason, pinnedRaces, togglePin, isPinned } =
+    useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pinnedRaces, setPinnedRaces] = useState<string[]>([]);
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(races.length / itemsPerPage);
+
+  const sortedRaces = [...races].sort((a, b) => {
+    const aIsPinned = isPinned(`${a.season}-${a.round}`);
+    const bIsPinned = isPinned(`${b.season}-${b.round}`);
+    if (aIsPinned && !bIsPinned) return -1;
+    if (!aIsPinned && bIsPinned) return 1;
+    return 0;
+  });
+
+  const totalPages = Math.ceil(sortedRaces.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
   const pageEnd = pageStart + itemsPerPage;
-  const currentPageItems = races.slice(pageStart, pageEnd);
+  const currentPageItems = sortedRaces.slice(pageStart, pageEnd);
 
   const circuitImages: Record<string, string> = {
     silverstone: "silverstone.png",
-  };
-
-  const togglePinned = (raceId: string) => {
-    const newPinnedRaces = pinnedRaces.includes(raceId)
-      ? pinnedRaces.filter((id) => id !== raceId)
-      : [...pinnedRaces, raceId];
-
-    setPinnedRaces(newPinnedRaces);
   };
 
   useEffect(() => {
@@ -93,9 +94,7 @@ const Races: React.FC = () => {
                   isPinned={pinnedRaces.includes(
                     `${race.season}-${race.round}`
                   )}
-                  onPinToggle={() =>
-                    togglePinned(`${race.season}-${race.round}`)
-                  }
+                  onPinToggle={() => togglePin(`${race.season}-${race.round}`)}
                   PinIcon={MdPushPin}
                   UnpinIcon={MdOutlinePushPin}
                 />
@@ -111,9 +110,7 @@ const Races: React.FC = () => {
                   isPinned={pinnedRaces.includes(
                     `${race.season}-${race.round}`
                   )}
-                  onPinToggle={() =>
-                    togglePinned(`${race.season}-${race.round}`)
-                  }
+                  onPinToggle={() => togglePin(`${race.season}-${race.round}`)}
                   PinIcon={MdPushPin}
                   UnpinIcon={MdOutlinePushPin}
                 />
