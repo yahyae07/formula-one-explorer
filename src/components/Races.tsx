@@ -6,6 +6,7 @@ import useViewStore from "@/store/useViewStore";
 import RaceCard from "./RaceCard";
 import RaceList from "./RaceList";
 import { MdPushPin, MdOutlinePushPin } from "react-icons/md";
+import ViewParticipantsModal from "./ViewParticipantsModal";
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -156,6 +157,7 @@ const Races: React.FC = () => {
           </div>
         </>
       )}
+      <ViewParticipantsModal />
     </div>
   );
 };

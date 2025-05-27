@@ -8,33 +8,56 @@ export interface Race {
     Circuit: {
         circuitId: string;
         circuitName: string;
-        Location: {
-            locality: string;
-            country: string;
-        }
     };
     date: string;
-    time?: string;
+}
+
+export interface Participant {
+    position: string;
+    Driver: {
+      driverId: string;
+      givenName: string;
+      familyName: string;
+      nationality: string;
+    }
+  Constructor: {
+    constructorId: string;
+    name: string;
+  }
 }
 
 interface RacesStore {
-    selectedSeason: string | null;
-    races: Race[];
-    pinnedRaces: string[];
-    selectSeason: (season: string) => void;
-    setRaces: (races: Race[]) => void;
-    togglePin: (raceId: string) => void;
-    isPinned: (raceId: string) => boolean;
+  selectedSeason: string | null;
+  selectedRound: string | null;
+  races: Race[];
+  pinnedRaces: string[];
+  raceResults: Participant[];
+  isModalOpen: boolean;
+  selectSeason: (season: string) => void;
+  selectRound: (round: string) => void;
+  clearSelectedRound: () => void;
+  setRaces: (races: Race[]) => void;
+  setRaceResults: (results: Participant[]) => void;
+  togglePin: (raceId: string) => void;
+  isPinned: (raceId: string) => boolean;
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 const useRacesStore = create<RacesStore>()(
     persist(
       (set, get) => ({
         selectedSeason: null,
+        selectedRound: null,
         races: [],
         pinnedRaces: [],
+        raceResults: [],
+        isModalOpen: false,
         selectSeason: (season) => set({ selectedSeason: season }),
+        selectRound: (round) => set({ selectedRound: round }),
+        clearSelectedRound: () => set({ selectedRound: null }),
         setRaces: (races) => set({ races }),
+        setRaceResults: (results) => set({ raceResults: results }),
         togglePin: (raceId) => set((state) => {
           const isPinned = state.pinnedRaces.includes(raceId);
           const pinnedRaces = isPinned
@@ -43,6 +66,8 @@ const useRacesStore = create<RacesStore>()(
           return { pinnedRaces };
         }),
         isPinned: (raceId) => get().pinnedRaces.includes(raceId),
+        openModal: () => set({ isModalOpen: true }),
+        closeModal: () => set({ isModalOpen: false }),
       }),
       {
         name: 'races-storage',
