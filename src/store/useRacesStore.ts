@@ -24,6 +24,13 @@ export interface Participant {
     constructorId: string;
     name: string;
   }
+  laps: string;
+  time: {
+    millis: string;
+    time: string;
+  }
+  points: string;
+  status: string;
 }
 
 interface RacesStore {

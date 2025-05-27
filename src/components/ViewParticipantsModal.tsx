@@ -37,7 +37,7 @@ const ViewParticipantsModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 flex bg-[var(--f1-black)]/75 items-center justify-center z-50">
-      <div className="bg-[var(--f1-darkgrey)] border-2 border-[var(--f1-darkgrey)] rounded-xl w-6/12 h-10/12 overflow-y-auto">
+      <div className="bg-[var(--f1-darkgrey)] border-2 border-[var(--f1-darkgrey)] rounded-xl w-10/12 h-11/12 overflow-y-auto">
         <div className="flex justify-between items-center p-4 border-b border-[var(--f1-grey)]">
           <h2 className="text-xl text-white font-bold">
             Round {selectedRound} Results
@@ -56,12 +56,23 @@ const ViewParticipantsModal: React.FC = () => {
           ) : (
             <>
               <div className="space-y-2">
+                <div className="p-4 rounded-lg text-white opacity-90">
+                  <div className="grid grid-cols-7 gap-4 w-full items-center">
+                    <h2>Position</h2>
+                    <h2>Name</h2>
+                    <h2>Team</h2>
+                    <h2>Nationality</h2>
+                    <h2>Laps</h2>
+                    <h2>Status</h2>
+                    <h2>Points</h2>
+                  </div>
+                </div>
                 {raceResults.map((result) => (
                   <div
                     key={result.Driver.driverId}
                     className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-2"
                   >
-                    <div className="grid grid-cols-4 gap-4 w-full items-center">
+                    <div className="grid grid-cols-7 gap-4 w-full items-center">
                       <h2 className="">
                         {result.position === "1"
                           ? "Pole Position"
@@ -75,6 +86,13 @@ const ViewParticipantsModal: React.FC = () => {
                       </div>
                       <div className="text-sm text-gray-300">
                         {result.Driver.nationality}
+                      </div>
+                      <div className="text-sm text-gray-300">{result.laps}</div>
+                      <div className="text-sm text-gray-300">
+                        {result.time?.time || result.status}
+                      </div>
+                      <div className="text-sm text-gray-300">
+                        {result.points}
                       </div>
                     </div>
                   </div>
