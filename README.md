@@ -22,7 +22,7 @@ A modern single page web application for exploring Formula One data including se
   
 - View detailed race results and driver standings
 
-<img width="1470" alt="ViewParticipantsOfRace" src="https://github.com/user-attachments/assets/4fc73cca-bf1f-42bd-8433-859f8fa7c12c" />
+<img width="1470" alt="ViewParticipantsOfRace" src="https://github.com/user-attachments/assets/72d71d51-d322-404c-ad87-6006d8b766b9" />
   
 - Responsive design for all screen sizes
 
