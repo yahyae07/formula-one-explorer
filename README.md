@@ -6,16 +6,24 @@ A modern single page web application for exploring Formula One data including se
 
 - Toggle between card and list views
 - Browse F1 1950 to 1979 seasons in reverse chronological order
+
   <img width="1470" alt="SeasonsCards" src="https://github.com/user-attachments/assets/d631b278-2987-4b3d-9280-a447078bcafd" />
   <img width="1470" alt="SeasonsList" src="https://github.com/user-attachments/assets/931bcefd-64b0-4bc3-bcfc-63f27ecbbe73" />
+  
 - View races for each selected season
+
   <img width="1470" alt="RacesCards" src="https://github.com/user-attachments/assets/d9e2c40c-49a1-4388-b9dd-bebe4893ef5b" />
-<img width="1470" alt="RacesList" src="https://github.com/user-attachments/assets/34e2a4db-e7f4-4c93-ac65-1a458b038f3c" />
+  <img width="1470" alt="RacesList" src="https://github.com/user-attachments/assets/34e2a4db-e7f4-4c93-ac65-1a458b038f3c" />
+  
 - Pin favorite races for quick access
 - Interactive race status visualization charts
+
   <img width="1470" alt="InteractiveDonutChart" src="https://github.com/user-attachments/assets/8dbb9ff7-4e7a-4a1a-aa41-2fdbbed398b4" />
+  
 - View detailed race results and driver standings
+
   <img width="1470" alt="ViewParticipantsOfRace" src="https://github.com/user-attachments/assets/07639dd3-dcba-42e7-aa9e-0351bbc99513" />
+  
 - Responsive design for all screen sizes
 
 ## Technologies Used
