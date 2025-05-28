@@ -7,6 +7,8 @@ import RaceCard from "./RaceCard";
 import RaceList from "./RaceList";
 import { MdPushPin, MdOutlinePushPin } from "react-icons/md";
 import ViewParticipantsModal from "./ViewParticipantsModal";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { TiPinOutline, TiPin } from "react-icons/ti";
 
 export const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -22,8 +24,8 @@ const Races: React.FC = () => {
     useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
-
+  const showAsCards = showCardView && !showListView;
+  const itemsPerPage = showAsCards ? 6 : 3;
   const sortedRaces = [...races].sort((a, b) => {
     const aIsPinned = isPinned(`${a.season}-${a.round}`);
     const bIsPinned = isPinned(`${b.season}-${b.round}`);
@@ -36,10 +38,6 @@ const Races: React.FC = () => {
   const pageStart = (currentPage - 1) * itemsPerPage;
   const pageEnd = pageStart + itemsPerPage;
   const currentPageItems = sortedRaces.slice(pageStart, pageEnd);
-
-  const circuitImages: Record<string, string> = {
-    silverstone: "silverstone.png",
-  };
 
   useEffect(() => {
     const fetchRaces = async () => {
@@ -64,8 +62,6 @@ const Races: React.FC = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
-  const showAsCards = showCardView && !showListView;
-
   if (!selectedSeason) {
     return (
       <div className="font-bold text-2xl text-[var(--f1-red)] mt-6">
@@ -75,12 +71,18 @@ const Races: React.FC = () => {
   }
 
   return (
-    <div id="races-section" className="mt-6">
-      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
-        Season {selectedSeason} Races
-      </h1>
+    <div id="races-section" className="mt-6 relative">
+      <div className="relative mb-4">
+        <h1 className="text-2xl font-bold text-[var(--f1-red)] relative inline-block pr-4 bg-[var(--f1-specialgrey)] z-10">
+          {selectedSeason} RACES
+        </h1>
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[var(--f1-red)] -z-0"></div>
+      </div>
+      <div className="absolute top-[1rem] right-0 w-0.5 bg-[var(--f1-red)] h-[calc(100%-4rem)]" />
       {races.length === 0 ? (
-        <p className="text-white">Loading races...</p>
+        <p className="text-[var(--f1-red)] text-xl font-bold">
+          Loading races...
+        </p>
       ) : (
         <>
           {showAsCards ? (
@@ -89,7 +91,6 @@ const Races: React.FC = () => {
                 <RaceCard
                   key={race.round}
                   race={race}
-                  circuitImages={circuitImages}
                   isPinned={pinnedRaces.includes(
                     `${race.season}-${race.round}`
                   )}
@@ -105,13 +106,12 @@ const Races: React.FC = () => {
                 <RaceList
                   key={race.round}
                   race={race}
-                  circuitImages={circuitImages}
                   isPinned={pinnedRaces.includes(
                     `${race.season}-${race.round}`
                   )}
                   onPinToggle={() => togglePin(`${race.season}-${race.round}`)}
-                  PinIcon={MdPushPin}
-                  UnpinIcon={MdOutlinePushPin}
+                  PinIcon={TiPin}
+                  UnpinIcon={TiPinOutline}
                 />
               ))}
             </ul>
@@ -121,9 +121,9 @@ const Races: React.FC = () => {
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
+              className="px-2 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Previous
+              <IoIosArrowBack size={24} />
             </button>
 
             <div className="flex space-x-1">
@@ -148,9 +148,9 @@ const Races: React.FC = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
+              className="px-2 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Next
+              <IoIosArrowForward size={24} />
             </button>
           </div>
         </>

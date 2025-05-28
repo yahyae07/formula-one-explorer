@@ -6,25 +6,29 @@ import useViewStore from "@/store/useViewStore";
 import React, { useEffect, useState } from "react";
 import SeasonCard from "./SeasonCard";
 import SeasonList from "./SeasonList";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Seasons: React.FC = () => {
   const { seasons, setSeasons } = useSeasonsStore();
   const { selectSeason, selectedSeason } = useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const showAsCards = showCardView && !showListView;
+  const itemsPerPage = showAsCards ? 10 : 7;
   const totalPages = Math.ceil(seasons.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
   const pageEnd = pageStart + itemsPerPage;
   const currentPageItems = seasons.slice(pageStart, pageEnd);
 
   useEffect(() => {
+    setCurrentPage(1);
+  }, [showCardView, showListView]);
+
+  useEffect(() => {
     const fetchSeasons = async () => {
       try {
-        console.log("Fetching seasons data...");
         const response = await fetch("https://ergast.com/api/f1/seasons.json");
         const data = await response.json();
-        console.log("Fetched seasons:", data.MRData.SeasonTable.Seasons);
         const sortedSeasons = [...data.MRData.SeasonTable.Seasons].sort(
           (a, b) => parseInt(b.season) - parseInt(a.season)
         );
@@ -47,7 +51,7 @@ const Seasons: React.FC = () => {
           block: "start",
         });
       }
-    }, 100);
+    }, 500);
   };
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -55,16 +59,20 @@ const Seasons: React.FC = () => {
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
-  const showAsCards = showCardView && !showListView;
-
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
-        F1 Seasons
-      </h1>
+    <div className="relative">
+      <div className="relative mb-8">
+        <h1 className="text-2xl font-bold text-[var(--f1-red)] relative inline-block pr-4 bg-[var(--f1-specialgrey)] z-10">
+          SEASONS
+        </h1>
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[var(--f1-red)] -z-0"></div>
+      </div>
+      <div className="absolute top-[1rem] right-0 w-0.5 bg-[var(--f1-red)] h-[calc(100%-4rem)]" />
 
       {seasons.length === 0 ? (
-        <p className="text-white text-xl font-bold">Loading seasons...</p>
+        <p className="text-[var(--f1-red)] text-xl font-bold">
+          Loading seasons...
+        </p>
       ) : (
         <>
           {showAsCards ? (
@@ -96,9 +104,9 @@ const Seasons: React.FC = () => {
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
+              className="px-2 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Previous
+              <IoIosArrowBack size={24} />
             </button>
 
             <div className="flex space-x-1">
@@ -123,11 +131,12 @@ const Seasons: React.FC = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
+              className="px-2 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Next
+              <IoIosArrowForward size={24} />
             </button>
           </div>
+          {!showAsCards && <div className="mb-13"></div>}
         </>
       )}
     </div>

@@ -4,14 +4,14 @@ import Seasons from "@/components/Seasons";
 
 export default function Home() {
   return (
-    <div className="bg-[var(--f1-grey)]">
+    <div className="bg-[var(--f1-specialgrey)] flex flex-col min-h-screen">
       <HeaderBar />
 
-      <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen gap-8 p-12">
-        <h1 className="text-2xl font-bold text-[var(--f1-red)]">
+      <div className="flex-1 flex flex-col px-12 py-8">
+        <h1 className="text-2xl font-bold text-[var(--f1-red)] text-center my-4">
           Explore the seasons, drivers, and teams of Formula One.
         </h1>
-        <div className="w-full max-w-6xl">
+        <div className="w-full max-w-6xl mx-auto">
           <Seasons />
           <Races />
         </div>
