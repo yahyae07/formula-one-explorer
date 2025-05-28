@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Formula One Explorer
 
-## Getting Started
+A modern single page web application for exploring Formula One data including seasons, races, drivers, teams, and statistics. Built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+## Features
+
+- Toggle between card and list views
+- Browse F1 1950 to 1979 seasons in reverse chronological order
+- View races for each selected season
+- Pin favorite races for quick access
+- Interactive race status visualization charts
+- View detailed race results and driver standings
+- Responsive design for all screen sizes
+
+## Technologies Used
+
+- **Frontend Framework**: Next.js 14 with React
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS with custom F1-inspired design system
+- **State Management**: Zustand
+- **Data Visualization**: Recharts
+- **Data Source**: Ergast F1 API
+- **Icons**: React Icons
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js 18.0 or later
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yahyae07/formula-one-explorer.git
+cd formula-one-explorer
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open http://localhost:3000 in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technical Approach
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Architecture
 
-## Learn More
+The application follows a component-based architecture with:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Components**: Modular UI components like `SeasonCard`, `RaceList`, and `ViewParticipantsModal`
+2. **State Management**: Zustand stores for managing application state:
+   - `useSeasonsStore`: Manages season data
+   - `useRacesStore`: Handles selected season and race, race data, pinned races, and modal state
+   - `useViewStore`: Controls the UI view mode (card vs. list)
+3. **API Integration**: Fetch calls to the Ergast F1 API for real-time data
+4. **Persistent Storage**: Local storage for saving user preferences (pinned races)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Design Decisions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Zustand over Redux**: Chose Zustand for its simplicity in handling global states and reduced boilerplate code
+2. **Tailwind CSS**: Used for rapid styling to increase productivity with consistent designs
+3. **F1-inspired UI**: Custom design system with Mercedes-AMG PETRONAS F1 car colors and styling (Black, Silver/Grey, Petronas teal, White, Red)
+4. **Responsive Layout**: Grid and flex layouts that adapt to different screen sizes
+5. **Data Visualization**: Donut chart showing race completion statistics, table showing each race driver standings and statistics.
+6. **Progressive Enhancement**: Fallbacks and loading states for data fetching
 
-## Deploy on Vercel
+### Performance Considerations
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Pagination**: Implemented to avoid rendering too many items at once
+2. **Lazy Loading**: Modal contents load only when needed
+3. **Persistent Cache**: Pinned races are stored in local storage
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Usage
+
+1. Browse through seasons using the card or list view
+2. Select a season to view its races
+3. Pin favorite races for quick access
+4. Toggle between card and list views using the toggle in the header
+5. Click "View participants" to see detailed race results
+
+## Future Improvements
+
+- Add driver and team pages with detailed statistics
+- Implement search functionality
+- Add more visualizations for championship standings
+- Create a dark/light theme toggle
+- Add more filtering options for races and results
+
+## License
+
+MIT
+
+## Acknowledgements
+
+- Data provided by [Ergast Motor Racing Developer API](https://ergast.com/mrd/)
+- F1 styling inspiration from the official Mercedes AMG PETRONAS Formula 1 website
+- Some UI components inspired by or adapted from [Uiverse](https://www.uiverse.io/) and [Material UI](https://mui.com/material-ui/)
+- Icons provided by [React Icons](https://react-icons.github.io/react-icons/)
+- Development supported in part by Claude 3.7 Sonnet Thinking
