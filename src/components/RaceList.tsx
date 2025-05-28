@@ -29,7 +29,7 @@ const RaceList: React.FC<RaceListProps> = ({
     onPinToggle();
   };
   return (
-    <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4 relative">
+    <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4 relative  w-[98%]">
       <div className="absolute top-4 right-4">
         {isPinned ? (
           <PinIcon

@@ -62,13 +62,20 @@ const Seasons: React.FC = () => {
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
-        F1 Seasons
-      </h1>
+    <div className="relative">
+      {/* Header with wrapped line styling */}
+      <div className="relative mb-8">
+        <h1 className="text-2xl font-bold text-[var(--f1-red)] relative inline-block pr-4 bg-[var(--f1-grey)] z-10">
+          SEASONS
+        </h1>
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[var(--f1-red)] -z-0"></div>
+      </div>
+      <div className="absolute top-[1rem] right-0 w-0.5 bg-[var(--f1-red)] h-[calc(100%-4rem)]" />
 
       {seasons.length === 0 ? (
-        <p className="text-white text-xl font-bold">Loading seasons...</p>
+        <p className="text-[var(--f1-red)] text-xl font-bold">
+          Loading seasons...
+        </p>
       ) : (
         <>
           {showAsCards ? (

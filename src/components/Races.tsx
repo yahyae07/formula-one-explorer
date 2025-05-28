@@ -71,12 +71,18 @@ const Races: React.FC = () => {
   }
 
   return (
-    <div id="races-section" className="mt-6">
-      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
-        Season {selectedSeason} Races
-      </h1>
+    <div id="races-section" className="mt-6 relative">
+      <div className="relative mb-4">
+        <h1 className="text-2xl font-bold text-[var(--f1-red)] relative inline-block pr-4 bg-[var(--f1-grey)] z-10">
+          {selectedSeason} RACES
+        </h1>
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[var(--f1-red)] -z-0"></div>
+      </div>
+      <div className="absolute top-[1rem] right-0 w-0.5 bg-[var(--f1-red)] h-[calc(100%-4rem)]" />
       {races.length === 0 ? (
-        <p className="text-white">Loading races...</p>
+        <p className="text-[var(--f1-red)] text-xl font-bold">
+          Loading races...
+        </p>
       ) : (
         <>
           {showAsCards ? (

@@ -30,7 +30,7 @@ const RaceCard: React.FC<RaceCardProps> = ({
   };
   return (
     <div className="relative drop-shadow-xl w-full h-86 overflow-hidden rounded-xl">
-      <div className="absolute flex flex-col justify-between text-white opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)] p-4">
+      <div className="absolute flex flex-col justify-between text-white opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)] p-4  w-[92.5%]">
         <div>
           <div className="flex justify-between items-start">
             <h3 className="text-lg font-bold">{race.raceName}</h3>
