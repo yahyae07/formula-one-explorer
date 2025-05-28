@@ -2,6 +2,7 @@ import useRacesStore, { Race } from "@/store/useRacesStore";
 import React from "react";
 import { formatDate } from "./Races";
 import { MdOutlinePushPin, MdPushPin } from "react-icons/md";
+import RaceStatusChart from "./RaceStatusChart";
 
 interface RaceCardProps {
   race: Race;
@@ -30,7 +31,7 @@ const RaceCard: React.FC<RaceCardProps> = ({
     onPinToggle();
   };
   return (
-    <div className="relative drop-shadow-xl w-full h-64 overflow-hidden rounded-xl">
+    <div className="relative drop-shadow-xl w-full h-86 overflow-hidden rounded-xl">
       <div className="absolute flex flex-col justify-between text-white opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)] p-4">
         <div>
           <div className="flex justify-between items-start">
@@ -55,18 +56,7 @@ const RaceCard: React.FC<RaceCardProps> = ({
             Round {race.round}
           </div>
         </div>
-
-        <div className="flex justify-center items-center my-1">
-          <div className="w-full h-24 overflow-hidden rounded-md border border-[var(--f1-darkgrey)]">
-            <img
-              src={`/circuits/${
-                circuitImages[race.Circuit.circuitId] || "default.png"
-              }`}
-              alt={race.Circuit.circuitName}
-              className="w-full h-full object-contain bg-[var(--f1-white)] p-1"
-            />
-          </div>
-        </div>
+        <RaceStatusChart season={race.season} round={race.round} />
 
         <div className="flex justify-end">
           <div
@@ -82,6 +72,3 @@ const RaceCard: React.FC<RaceCardProps> = ({
 };
 
 export default RaceCard;
-function onPinToggle() {
-  throw new Error("Function not implemented.");
-}

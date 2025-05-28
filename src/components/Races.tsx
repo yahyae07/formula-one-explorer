@@ -22,7 +22,7 @@ const Races: React.FC = () => {
     useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 6;
 
   const sortedRaces = [...races].sort((a, b) => {
     const aIsPinned = isPinned(`${a.season}-${a.round}`);
@@ -46,12 +46,10 @@ const Races: React.FC = () => {
       if (!selectedSeason) return;
 
       try {
-        console.log(`Fetching races for season: ${selectedSeason}`);
         const response = await fetch(
           `https://ergast.com/api/f1/${selectedSeason}/races.json`
         );
         const data = await response.json();
-        console.log("Fetched races:", data.MRData.RaceTable.Races);
         setRaces(data.MRData.RaceTable.Races);
         setCurrentPage(1);
       } catch (error) {
@@ -70,17 +68,17 @@ const Races: React.FC = () => {
 
   if (!selectedSeason) {
     return (
-      <div className="font-bold text-xl text-[var(--f1-red)] mt-6">
+      <div className="font-bold text-2xl text-[var(--f1-red)] mt-6">
         Please select a season to view races
       </div>
     );
   }
 
   return (
-    <div className="mt-6">
-      <h2 className="text-xl font-bold mb-4 text-[var(--f1-red)]">
-        Races for {selectedSeason} Season
-      </h2>
+    <div id="races-section" className="mt-6">
+      <h1 className="text-2xl font-bold mb-4 text-[var(--f1-red)]">
+        Season {selectedSeason} Races
+      </h1>
       {races.length === 0 ? (
         <p className="text-white">Loading races...</p>
       ) : (

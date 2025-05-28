@@ -2,6 +2,7 @@ import useRacesStore, { Race } from "@/store/useRacesStore";
 import React from "react";
 import { formatDate } from "./Races";
 import { MdOutlinePushPin, MdPushPin } from "react-icons/md";
+import RaceStatusChart from "./RaceStatusChart";
 
 interface RaceListProps {
   race: Race;
@@ -42,13 +43,7 @@ const RaceList: React.FC<RaceListProps> = ({
             Round {race.round}
           </div>
 
-          <div className="mt-8 flex flex-row items-center gap-3">
-            <div
-              className="text-xs bg-[var(--f1-red)] inline-block px-3 py-2 rounded-md hover:cursor-pointer"
-              onClick={handleViewParticipants}
-            >
-              View participants
-            </div>
+          <div className="mt-14 flex flex-row items-center gap-3">
             {isPinned ? (
               <PinIcon
                 className="cursor-pointer text-[var(--f1-white)]"
@@ -60,18 +55,16 @@ const RaceList: React.FC<RaceListProps> = ({
                 onClick={handlePinClick}
               />
             )}
+            <div
+              className="text-xs bg-[var(--f1-red)] inline-block px-3 py-2 rounded-md hover:cursor-pointer"
+              onClick={handleViewParticipants}
+            >
+              View participants
+            </div>
           </div>
         </div>
 
-        <div className="md:w-64 h-32 overflow-hidden rounded-md border border-[var(--f1-darkgrey)]">
-          <img
-            src={`/circuits/${
-              circuitImages[race.Circuit.circuitId] || "default.png"
-            }`}
-            alt={race.Circuit.circuitName}
-            className="w-full h-full object-contain bg-[var(--f1-white)] p-1"
-          />
-        </div>
+        <RaceStatusChart season={race.season} round={race.round} />
       </div>
     </li>
   );
