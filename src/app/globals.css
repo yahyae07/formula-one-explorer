@@ -10,6 +10,7 @@
     --f1-black: #111111;
     --f1-darkgrey: #565f64;
     --f1-white: #ffffff;
+    --f1-specialgrey: #c6c6c6;
 }
 
 @theme inline {

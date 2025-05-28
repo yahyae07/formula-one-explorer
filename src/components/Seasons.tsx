@@ -27,10 +27,8 @@ const Seasons: React.FC = () => {
   useEffect(() => {
     const fetchSeasons = async () => {
       try {
-        console.log("Fetching seasons data...");
         const response = await fetch("https://ergast.com/api/f1/seasons.json");
         const data = await response.json();
-        console.log("Fetched seasons:", data.MRData.SeasonTable.Seasons);
         const sortedSeasons = [...data.MRData.SeasonTable.Seasons].sort(
           (a, b) => parseInt(b.season) - parseInt(a.season)
         );
@@ -63,9 +61,8 @@ const Seasons: React.FC = () => {
 
   return (
     <div className="relative">
-      {/* Header with wrapped line styling */}
       <div className="relative mb-8">
-        <h1 className="text-2xl font-bold text-[var(--f1-red)] relative inline-block pr-4 bg-[var(--f1-grey)] z-10">
+        <h1 className="text-2xl font-bold text-[var(--f1-red)] relative inline-block pr-4 bg-[var(--f1-specialgrey)] z-10">
           SEASONS
         </h1>
         <div className="absolute top-1/2 left-0 w-full h-0.5 bg-[var(--f1-red)] -z-0"></div>

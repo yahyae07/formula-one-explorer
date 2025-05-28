@@ -4,7 +4,7 @@ import Seasons from "@/components/Seasons";
 
 export default function Home() {
   return (
-    <div className="bg-[var(--f1-grey)] flex flex-col min-h-screen">
+    <div className="bg-[var(--f1-specialgrey)] flex flex-col min-h-screen">
       <HeaderBar />
 
       <div className="flex-1 flex flex-col px-12 py-8">

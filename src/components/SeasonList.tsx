@@ -15,7 +15,7 @@ const SeasonList: React.FC<SeasonListProps> = ({
   return (
     <li
       onClick={() => onSelect(season.season)}
-      className={`relative p-4 rounded-xl drop-shadow-lg cursor-pointer overflow-hidden  w-[98%]
+      className={`relative p-4 rounded-xl drop-shadow-lg cursor-pointer overflow-hidden w-[98%] border-b-4 border-[var(--f1-lilac)]
         ${isSelected ? "ring-4 ring-[var(--f1-lilac)]" : "hover:bg-gray-700"}
       `}
       role="button"

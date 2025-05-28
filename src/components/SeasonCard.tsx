@@ -26,7 +26,7 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
         }
       }}
     >
-      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)]">
+      <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)] border-b-4 border-[var(--f1-lilac)]">
         <div className="w-full h-24 flex flex-col items-center justify-center text-center">
           <span className="text-lg font-bold">{season.season}</span>
           {season.url && (
