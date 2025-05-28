@@ -25,7 +25,7 @@ export interface Participant {
     name: string;
   }
   laps: string;
-  time: {
+  Time: {
     millis: string;
     time: string;
   }

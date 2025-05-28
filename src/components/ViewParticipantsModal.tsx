@@ -66,13 +66,14 @@ const ViewParticipantsModal: React.FC = () => {
               {/* Race results table header */}
               <div className="space-y-2">
                 <div className="p-4 rounded-lg opacity-90">
-                  <div className="grid grid-cols-7 gap-4 w-full items-center text-[var(--f1-red)] font-bold">
+                  <div className="grid grid-cols-8 gap-4 w-full items-center text-[var(--f1-red)] font-bold">
                     <h2>Position</h2>
                     <h2>Name</h2>
                     <h2>Team</h2>
                     <h2>Nationality</h2>
                     <h2>Laps</h2>
                     <h2>Status</h2>
+                    <h2>Time</h2>
                     <h2>Points</h2>
                   </div>
                 </div>
@@ -82,7 +83,7 @@ const ViewParticipantsModal: React.FC = () => {
                     key={result.Driver.driverId}
                     className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-2"
                   >
-                    <div className="grid grid-cols-7 gap-4 w-full items-center">
+                    <div className="grid grid-cols-8 gap-4 w-full items-center">
                       <h2 className="">
                         {result.position === "1"
                           ? "Pole Position"
@@ -99,7 +100,10 @@ const ViewParticipantsModal: React.FC = () => {
                       </div>
                       <div className="text-sm text-gray-300">{result.laps}</div>
                       <div className="text-sm text-gray-300">
-                        {result.time?.time || result.status}
+                        {result.status}
+                      </div>
+                      <div className="text-sm text-gray-300">
+                        {result.Time?.time || "N/A"}
                       </div>
                       <div className="text-sm text-gray-300">
                         {result.points}
