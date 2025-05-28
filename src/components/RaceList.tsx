@@ -30,20 +30,17 @@ const RaceList: React.FC<RaceListProps> = ({
   };
   return (
     <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4 relative  w-[98%]">
-      <div className="absolute top-4 right-4">
-        {isPinned ? (
-          <PinIcon
-            className="cursor-pointer"
-            onClick={handlePinClick}
-            size={20}
-          />
-        ) : (
-          <UnpinIcon
-            className="cursor-pointer"
-            onClick={handlePinClick}
-            size={20}
-          />
-        )}
+      <div className="absolute top-4 right-4 z-10">
+        <button
+          onClick={handlePinClick}
+          className="w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.1)] rounded-full"
+        >
+          {isPinned ? (
+            <PinIcon size={24} className="text-white" />
+          ) : (
+            <UnpinIcon size={24} className="text-white" />
+          )}
+        </button>
       </div>
 
       <div className="flex flex-col md:flex-row gap-4">
