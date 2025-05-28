@@ -9,7 +9,7 @@ export default function Home() {
 
       <div className="flex-1 flex flex-col px-12 py-8">
         <h1 className="text-2xl font-bold text-[var(--f1-red)] text-center my-4">
-          Explore the seasons, drivers, and teams of Formula One.
+          Explore the seasons, races, drivers, and teams of Formula One.
         </h1>
         <div className="w-full max-w-6xl mx-auto">
           <Seasons />
