@@ -34,19 +34,16 @@ const RaceCard: React.FC<RaceCardProps> = ({
         <div>
           <div className="flex justify-between items-start">
             <h3 className="text-lg font-bold">{race.raceName}</h3>
-            {isPinned ? (
-              <PinIcon
-                className="mt-2 cursor-pointer"
-                onClick={handlePinClick}
-                size={20}
-              />
-            ) : (
-              <UnpinIcon
-                className="mt-2 cursor-pointer"
-                onClick={handlePinClick}
-                size={20}
-              />
-            )}
+            <button
+              onClick={handlePinClick}
+              className="w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-[rgba(255,255,255,0.1)] rounded-full"
+            >
+              {isPinned ? (
+                <PinIcon size={24} className="text-white" />
+              ) : (
+                <UnpinIcon size={24} className="text-white" />
+              )}
+            </button>
           </div>
           <div className="text-xs text-gray-300 mt-1">
             {race.Circuit.circuitName} <br />
