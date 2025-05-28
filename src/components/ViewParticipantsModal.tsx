@@ -3,6 +3,7 @@ import useRacesStore from "@/store/useRacesStore";
 import { MdClose } from "react-icons/md";
 
 const ViewParticipantsModal: React.FC = () => {
+  // Using Zustand store to retrieve the selected season, selected round, and race results to manage the state of the modal displaying
   const {
     selectedSeason,
     selectedRound,
@@ -12,6 +13,7 @@ const ViewParticipantsModal: React.FC = () => {
     closeModal,
   } = useRacesStore();
 
+  // Fetch race results when the modal is opened
   useEffect(() => {
     const fetchRaceResults = async () => {
       if (!isModalOpen || !selectedSeason || !selectedRound) return;
@@ -31,14 +33,17 @@ const ViewParticipantsModal: React.FC = () => {
     fetchRaceResults();
   }, [selectedSeason, selectedRound, isModalOpen]);
 
+  // If the modal is not open, return null to avoid rendering
   if (!isModalOpen) {
     return null;
   }
 
   return (
+    // Modal container with a dark background and centered content
     <div className="fixed inset-0 flex bg-[var(--f1-black)]/75 items-center justify-center z-50">
       <div className="bg-[var(--f1-specialgrey)] border-2 border-[var(--f1-darkgrey)] rounded-xl w-10/12 h-11/12 overflow-y-auto">
         <div className="flex justify-between items-center p-4 border-b border-[var(--f1-red)]">
+          {/* Modal header */}
           <h2 className="text-xl text-[var(--f1-red)] font-bold">
             Round {selectedRound} Results
           </h2>
@@ -50,6 +55,7 @@ const ViewParticipantsModal: React.FC = () => {
           </button>
         </div>
 
+        {/* Modal body */}
         <div className="p-4">
           {raceResults.length === 0 ? (
             <p className="text-center py-8 text-[var(--f1-red)]]">
@@ -57,6 +63,7 @@ const ViewParticipantsModal: React.FC = () => {
             </p>
           ) : (
             <>
+              {/* Race results table header */}
               <div className="space-y-2">
                 <div className="p-4 rounded-lg opacity-90">
                   <div className="grid grid-cols-7 gap-4 w-full items-center text-[var(--f1-red)] font-bold">
@@ -69,6 +76,7 @@ const ViewParticipantsModal: React.FC = () => {
                     <h2>Points</h2>
                   </div>
                 </div>
+                {/* Race results */}
                 {raceResults.map((result) => (
                   <div
                     key={result.Driver.driverId}

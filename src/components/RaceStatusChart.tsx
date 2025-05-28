@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
+// RaceStatusChartProps interface defines the structure of the props expected by the RaceStatusChart component
 interface RaceStatusChartProps {
   season: string;
   round: string;
 }
 
+// STATUS_CATEGORIES defines the mapping of status codes to their display labels and colors
 const STATUS_CATEGORIES: Record<string, { label: string; color: string }> = {
   FINISHED: { label: "Finished", color: "#00a19c" },
   LAPPED: { label: "Lapped", color: "#c6c6c6" },
@@ -13,6 +15,7 @@ const STATUS_CATEGORIES: Record<string, { label: string; color: string }> = {
   CAR_ISSUES: { label: "Car Issues", color: "#565f64" },
 };
 
+// categorizeStatus function categorizes race status strings into predefined categories
 const categorizeStatus = (status: string): string => {
   if (status === "Finished") return "FINISHED";
   if (status.startsWith("+")) return "LAPPED";
@@ -21,12 +24,14 @@ const categorizeStatus = (status: string): string => {
 };
 
 const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
+  // Using React hooks to manage state for race status data
   const [statusData, setStatusData] = useState<
     Array<{ name: string; value: number; color: string }>
   >([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Fetch race results when the component mounts or season/round changes
   useEffect(() => {
     const fetchRaceResults = async () => {
       if (!season || !round) return;
@@ -71,6 +76,7 @@ const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
     fetchRaceResults();
   }, [season, round]);
 
+  // If loading, display a loading message; if there's an error, display the error message; if no data is available, show a no data message
   if (loading)
     return (
       <div className="flex items-center justify-center bg-[var(--f1-black)] rounded-lg">
@@ -95,9 +101,11 @@ const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
     );
 
   return (
+    // Main container
     <div className="flex-1 flex flex-col">
       <div className="h-36 w-full">
         <ResponsiveContainer width="100%" height="100%">
+          {/* Race status pie chart */}
           <PieChart>
             <Pie
               data={statusData}
@@ -106,13 +114,13 @@ const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
               labelLine={false}
               outerRadius={50}
               innerRadius={20}
-              fill="#8884d8"
               dataKey="value"
             >
               {statusData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
+            {/* Interactive hovering to display participants count within each status */}
             <Tooltip
               formatter={(value) => [value, "Participants"]}
               labelFormatter={() => ""}
@@ -127,6 +135,7 @@ const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
         </ResponsiveContainer>
       </div>
 
+      {/* Legend for race status categories */}
       <div className="flex flex-wrap justify-center gap-x-4">
         {statusData.map((entry, index) => (
           <div key={index} className="flex items-center">

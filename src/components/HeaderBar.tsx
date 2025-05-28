@@ -4,12 +4,15 @@ import React from "react";
 import useViewStore from "@/store/useViewStore";
 
 const HeaderBar = () => {
+  // Using zustand store to manage the view state
   const { toggleCardView, showListView, toggleListView } = useViewStore();
+  // Function to handle toggling between card and list views
   const handleToggleView = () => {
     toggleCardView();
     toggleListView();
   };
   return (
+    // Header bar component with a title and toggle switch for view mode
     <div className="relative flex h-16 w-full flex-row items-center justify-between bg-[var(--f1-specialgrey)] shadow-lg px-5">
       <div className="flex flex-row items-center gap-2">
         <h1 className="text-[var(--f1-white)] text-4xl font-bold">

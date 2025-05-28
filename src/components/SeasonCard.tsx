@@ -1,6 +1,7 @@
 import { Season } from "@/store/useSeasonsStore";
 import React from "react";
 
+// SeasonCardProps interface defines the structure of the props expected by the SeasonCard component
 interface SeasonCardProps {
   season: Season;
   isSelected: boolean;
@@ -8,11 +9,13 @@ interface SeasonCardProps {
 }
 
 const SeasonCard: React.FC<SeasonCardProps> = ({
+  // Destructuring props to access season data, selection state, and the selection handler
   season,
   isSelected,
   onSelect,
 }) => {
   return (
+    // Card representing a season, with click and keyboard accessibility for selection
     <div
       className={`relative drop-shadow-xl w-48 h-64 overflow-hidden rounded-xl hover:bg-gray-700 hover:cursor-pointer ${
         isSelected ? "ring-4 ring-[var(--f1-lilac)]" : ""
@@ -26,7 +29,9 @@ const SeasonCard: React.FC<SeasonCardProps> = ({
         }
       }}
     >
+      {/* Background overlay of a single season card */}
       <div className="absolute flex items-center justify-center text-white z-[1] opacity-90 rounded-xl inset-0.5 bg-[var(--f1-black)] border-b-4 border-[var(--f1-lilac)]">
+        {/* Season Information */}
         <div className="w-full h-24 flex flex-col items-center justify-center text-center">
           <span className="text-lg font-bold">{season.season}</span>
           {season.url && (
