@@ -39,6 +39,15 @@ const Seasons: React.FC = () => {
 
   const handleSeasonClick = (season: string) => {
     selectSeason(season);
+    setTimeout(() => {
+      const racesSection = document.getElementById("races-section");
+      if (racesSection) {
+        racesSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 100);
   };
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
