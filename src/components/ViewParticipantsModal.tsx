@@ -37,14 +37,14 @@ const ViewParticipantsModal: React.FC = () => {
 
   return (
     <div className="fixed inset-0 flex bg-[var(--f1-black)]/75 items-center justify-center z-50">
-      <div className="bg-[var(--f1-darkgrey)] border-2 border-[var(--f1-darkgrey)] rounded-xl w-10/12 h-11/12 overflow-y-auto">
-        <div className="flex justify-between items-center p-4 border-b border-[var(--f1-grey)]">
-          <h2 className="text-xl text-white font-bold">
+      <div className="bg-[var(--f1-specialgrey)] border-2 border-[var(--f1-darkgrey)] rounded-xl w-10/12 h-11/12 overflow-y-auto">
+        <div className="flex justify-between items-center p-4 border-b border-[var(--f1-red)]">
+          <h2 className="text-xl text-[var(--f1-red)] font-bold">
             Round {selectedRound} Results
           </h2>
           <button
             onClick={closeModal}
-            className="text-white hover:text-[var(--f1-red)] p-1 rounded-full hover:cursor-pointer"
+            className="text-[var(--f1-red)] p-1 rounded-full hover:cursor-pointer"
           >
             <MdClose size={24} />
           </button>
@@ -52,12 +52,14 @@ const ViewParticipantsModal: React.FC = () => {
 
         <div className="p-4">
           {raceResults.length === 0 ? (
-            <p className="text-white text-center py-8">Loading results...</p>
+            <p className="text-center py-8 text-[var(--f1-red)]]">
+              Loading results...
+            </p>
           ) : (
             <>
               <div className="space-y-2">
-                <div className="p-4 rounded-lg text-white opacity-90">
-                  <div className="grid grid-cols-7 gap-4 w-full items-center">
+                <div className="p-4 rounded-lg opacity-90">
+                  <div className="grid grid-cols-7 gap-4 w-full items-center text-[var(--f1-red)] font-bold">
                     <h2>Position</h2>
                     <h2>Name</h2>
                     <h2>Team</h2>
