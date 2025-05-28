@@ -1,21 +1,19 @@
 import useRacesStore, { Race } from "@/store/useRacesStore";
 import React from "react";
 import { formatDate } from "./Races";
-import { MdOutlinePushPin, MdPushPin } from "react-icons/md";
+import { TiPinOutline, TiPin } from "react-icons/ti";
 import RaceStatusChart from "./RaceStatusChart";
 
 interface RaceListProps {
   race: Race;
-  circuitImages: Record<string, string>;
   isPinned: boolean;
   onPinToggle: () => void;
-  PinIcon: typeof MdPushPin;
-  UnpinIcon: typeof MdOutlinePushPin;
+  PinIcon: typeof TiPin;
+  UnpinIcon: typeof TiPinOutline;
 }
 
 const RaceList: React.FC<RaceListProps> = ({
   race,
-  circuitImages,
   isPinned,
   onPinToggle,
   PinIcon,
@@ -31,10 +29,28 @@ const RaceList: React.FC<RaceListProps> = ({
     onPinToggle();
   };
   return (
-    <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4">
+    <li className="p-4 bg-[var(--f1-black)] rounded-lg text-white opacity-90 border-b-4 border-[var(--f1-red)] mb-4 relative">
+      <div className="absolute top-4 right-4">
+        {isPinned ? (
+          <PinIcon
+            className="cursor-pointer"
+            onClick={handlePinClick}
+            size={20}
+          />
+        ) : (
+          <UnpinIcon
+            className="cursor-pointer"
+            onClick={handlePinClick}
+            size={20}
+          />
+        )}
+      </div>
+
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-2">
-          <h3 className="text-lg font-bold">{race.raceName}</h3>
+          <div className="flex justify-between items-center mb-1">
+            <h3 className="text-lg font-bold">{race.raceName}</h3>
+          </div>
 
           <div className="text-sm text-gray-300 mb-2">
             {race.Circuit.circuitName} - {formatDate(race.date)}
@@ -44,17 +60,6 @@ const RaceList: React.FC<RaceListProps> = ({
           </div>
 
           <div className="mt-14 flex flex-row items-center gap-3">
-            {isPinned ? (
-              <PinIcon
-                className="cursor-pointer text-[var(--f1-white)]"
-                onClick={handlePinClick}
-              />
-            ) : (
-              <UnpinIcon
-                className="cursor-pointer text-[var(--f1-white)]"
-                onClick={handlePinClick}
-              />
-            )}
             <div
               className="text-xs bg-[var(--f1-red)] inline-block px-3 py-2 rounded-md hover:cursor-pointer"
               onClick={handleViewParticipants}

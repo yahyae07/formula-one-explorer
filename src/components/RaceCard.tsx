@@ -6,7 +6,6 @@ import RaceStatusChart from "./RaceStatusChart";
 
 interface RaceCardProps {
   race: Race;
-  circuitImages: Record<string, string>;
   isPinned: boolean;
   onPinToggle: () => void;
   PinIcon: typeof MdPushPin;
@@ -15,7 +14,6 @@ interface RaceCardProps {
 
 const RaceCard: React.FC<RaceCardProps> = ({
   race,
-  circuitImages,
   isPinned,
   onPinToggle,
   PinIcon,
@@ -40,11 +38,13 @@ const RaceCard: React.FC<RaceCardProps> = ({
               <PinIcon
                 className="mt-2 cursor-pointer"
                 onClick={handlePinClick}
+                size={20}
               />
             ) : (
               <UnpinIcon
                 className="mt-2 cursor-pointer"
                 onClick={handlePinClick}
+                size={20}
               />
             )}
           </div>

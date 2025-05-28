@@ -6,17 +6,23 @@ import useViewStore from "@/store/useViewStore";
 import React, { useEffect, useState } from "react";
 import SeasonCard from "./SeasonCard";
 import SeasonList from "./SeasonList";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const Seasons: React.FC = () => {
   const { seasons, setSeasons } = useSeasonsStore();
   const { selectSeason, selectedSeason } = useRacesStore();
   const { showCardView, showListView } = useViewStore();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const showAsCards = showCardView && !showListView;
+  const itemsPerPage = showAsCards ? 10 : 7;
   const totalPages = Math.ceil(seasons.length / itemsPerPage);
   const pageStart = (currentPage - 1) * itemsPerPage;
   const pageEnd = pageStart + itemsPerPage;
   const currentPageItems = seasons.slice(pageStart, pageEnd);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [showCardView, showListView]);
 
   useEffect(() => {
     const fetchSeasons = async () => {
@@ -47,15 +53,13 @@ const Seasons: React.FC = () => {
           block: "start",
         });
       }
-    }, 100);
+    }, 500);
   };
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const nextPage = () =>
     setCurrentPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-
-  const showAsCards = showCardView && !showListView;
 
   return (
     <div>
@@ -96,9 +100,9 @@ const Seasons: React.FC = () => {
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
+              className="px-2 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Previous
+              <IoIosArrowBack size={24} />
             </button>
 
             <div className="flex space-x-1">
@@ -123,11 +127,12 @@ const Seasons: React.FC = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className="px-3 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed"
+              className="px-2 py-1 bg-[var(--f1-black)] text-white rounded-md disabled:opacity-50 hover:bg-gray-700 cursor-pointer disabled:cursor-not-allowed flex items-center justify-center"
             >
-              Next
+              <IoIosArrowForward size={24} />
             </button>
           </div>
+          {!showAsCards && <div className="mb-13"></div>}
         </>
       )}
     </div>
