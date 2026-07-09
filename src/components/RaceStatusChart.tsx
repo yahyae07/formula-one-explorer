@@ -51,7 +51,7 @@ const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
           CAR_ISSUES: 0,
         };
 
-        results.forEach((result: any) => {
+        results.forEach((result: { status: string }) => {
           const category = categorizeStatus(result.status);
           statusCounts[category]++;
         });
