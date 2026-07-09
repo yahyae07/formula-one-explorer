@@ -39,7 +39,7 @@ const RaceStatusChart: React.FC<RaceStatusChartProps> = ({ season, round }) => {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://ergast.com/api/f1/${season}/${round}/results.json?limit=50`
+          `https://api.jolpi.ca/ergast/f1/${season}/${round}/results.json?limit=50`
         );
         const data = await response.json();
         const results = data.MRData.RaceTable.Races[0]?.Results || [];

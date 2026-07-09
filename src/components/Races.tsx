@@ -51,7 +51,7 @@ const Races: React.FC = () => {
 
       try {
         const response = await fetch(
-          `https://ergast.com/api/f1/${selectedSeason}/races.json`
+          `https://api.jolpi.ca/ergast/f1/${selectedSeason}/races.json`
         );
         const data = await response.json();
         setRaces(data.MRData.RaceTable.Races);

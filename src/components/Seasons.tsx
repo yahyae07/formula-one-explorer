@@ -33,7 +33,7 @@ const Seasons: React.FC = () => {
   useEffect(() => {
     const fetchSeasons = async () => {
       try {
-        const response = await fetch("https://ergast.com/api/f1/seasons.json");
+        const response = await fetch("https://api.jolpi.ca/ergast/f1/seasons.json");
         const data = await response.json();
         const sortedSeasons = [...data.MRData.SeasonTable.Seasons].sort(
           (a, b) => parseInt(b.season) - parseInt(a.season)

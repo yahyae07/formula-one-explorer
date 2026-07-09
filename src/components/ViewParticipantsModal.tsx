@@ -20,7 +20,7 @@ const ViewParticipantsModal: React.FC = () => {
 
       try {
         const response = await fetch(
-          `https://ergast.com/api/f1/${selectedSeason}/${selectedRound}/results.json`
+          `https://api.jolpi.ca/ergast/f1/${selectedSeason}/${selectedRound}/results.json`
         );
         const data = await response.json();
         const results = data.MRData.RaceTable.Races[0]?.Results || [];
